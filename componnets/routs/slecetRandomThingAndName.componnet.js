@@ -227,7 +227,7 @@ const SelectRandomThings = ({ Names }) => {
                         >
                           <Text style={styles.title}>صوت عزيزي</Text>
                           <Text style={styles.name}>
-                            مكون {Names[currentIndex]} صوت
+                            المّكون {Names[currentIndex]} صوت
                           </Text>
                           {Names.map((name, index) => {
                             if (index !== currentIndex) {
@@ -265,7 +265,7 @@ const SelectRandomThings = ({ Names }) => {
                         >
                           <Text style={styles.title}> اسأل الي بدك ياه</Text>
                           <Text style={styles.name}>
-                            مكون {Names[currentIndex]} اسأل
+                            المّكون {Names[currentIndex]} اسأل
                           </Text>
                           {Names.filter(
                             (name, index) => index !== currentIndex
@@ -286,7 +286,7 @@ const SelectRandomThings = ({ Names }) => {
                             }}
                           >
                             <Text style={styles.buttonVotePage}>
-                              صويت يا سيدي
+                              صوت يا سيدي
                             </Text>
                           </TouchableOpacity>
                         </ScrollView>
@@ -298,7 +298,7 @@ const SelectRandomThings = ({ Names }) => {
                 <>
                   <Text style={styles.title}>وقت الاسئلة</Text>
                   <Text style={styles.name}>
-                    مكون {Names[currentIndex]} اسأل مكون{" "}
+                    المّكون {Names[currentIndex]} اسأل المّكون{" "}
                     {Names[randomNameForQ]}
                   </Text>
                   <TouchableOpacity

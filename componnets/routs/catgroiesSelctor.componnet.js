@@ -10,16 +10,13 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const image =
-  "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80";
-
 
 const data = [
-  { id: 1, title: "الحيوانات", image: image },
-  { id: 2, title: "Photo 2", image: image },
-  { id: 3, title: "Photo 3", image: image },
-  { id: 4, title: "Photo 4", image: image },
-  { id: 5, title: "Photo 5", image: image },
+  { id: 1, title: "الحيوانات", image:"https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80"},
+  { id: 2, title: "Photo 2", image: "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80" },
+  { id: 3, title: "Photo 3", image: "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80" },
+  { id: 4, title: "Photo 4", image: "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80" },
+  { id: 5, title: "Photo 5", image: "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80" },
 ];
 
 const Item = ({ title, image, onPress }) => (

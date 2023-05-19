@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,26 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import SelectRandomThings from "./slecetRandomThingAndName.componnet";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+
+// Add your Firebase configuration here
+const firebaseConfig = {
+  apiKey: "AIzaSyCDLZBgltvio0vF_nSnVDX03Z9IDtkYQMU",
+  authDomain: "outofcook.firebaseapp.com",
+  projectId: "outofcook",
+  storageBucket: "outofcook.appspot.com",
+  messagingSenderId: "755923868479",
+  appId: "1:755923868479:web:b52ba752211030994a918a",
+};
+
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use the existing app
+}
+
 
 const MainPage = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,7 +40,27 @@ const MainPage = ({ route }) => {
   const [renderSelectRandomThing, setRenderSelectRandomThing] = useState(false);
   const catgroiesSelctor = route.params.title;
   const navigation = useNavigation();
+  const [fetchedData, setFetchedData] = useState('');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const firestore = firebase.firestore();
+        const collectionRef = firestore.collection("categories");
+        const doc = await collectionRef.doc(catgroiesSelctor).get();
+        if (doc.exists) {
+          const data = doc.data();
+          setFetchedData(data.items)
+          // Process the data here if needed
+        } else {
+          console.log("Document not found");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
   const goToTheNextPage = () => {
     setRenderSelectRandomThing(true);
   };
@@ -45,7 +85,7 @@ const MainPage = ({ route }) => {
   return (
     <View style={styles.container}>
       {renderSelectRandomThing ? (
-        <SelectRandomThings Names={textList}/>
+        <SelectRandomThings Names={textList} data={fetchedData}/>
       ) : (
         <>
           <Text style={styles.title}>ادخل ثلاث اسماء على الاقل</Text>

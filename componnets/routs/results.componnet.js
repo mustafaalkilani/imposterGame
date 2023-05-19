@@ -33,7 +33,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const Result = ({ Names, voteData, imposter, gotTheThing }) => {
+const Result = ({ Names, voteData, imposter, gotTheThing, data }) => {
   const [totalScores, setTotalScores] = useState({});
   const [showSelectRandomThings, setShowSelectRandomThings] = useState(false);
   const [showFinshButton, setShowFinshButton] = useState(true);
@@ -145,7 +145,7 @@ const Result = ({ Names, voteData, imposter, gotTheThing }) => {
           ): null}
         </View>
       ) : (
-        <SelectRandomThings Names={Names} />
+        <SelectRandomThings Names={Names} data={data}/>
       )}
     </>
   );

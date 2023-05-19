@@ -9,7 +9,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import SelectItem from './selecteItem.componnet';
 
-const Countdown = ({ duration, imposter, names, array, item, voteData }) => {
+const Countdown = ({ duration, imposter, names, array, item, voteData, data }) => {
   const [remainingTime, setRemainingTime] = useState(duration);
   const [countdownFinished, setCountdownFinished] = useState(false);
   const [renderOtherComponent, setRenderOtherComponent] = useState(false);
@@ -74,7 +74,7 @@ const Countdown = ({ duration, imposter, names, array, item, voteData }) => {
         )}
       </View>
       </>
-    ): <SelectItem Names={names} array={array} imposter={imposter} item={item} voteData={voteData}/>}
+    ): <SelectItem Names={names} array={array} imposter={imposter} item={item} voteData={voteData} data={data}/>}
     </>
   );
 };

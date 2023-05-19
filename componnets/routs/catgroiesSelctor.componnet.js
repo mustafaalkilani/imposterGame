@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -9,28 +9,49 @@ import {
   Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 
+// Add your Firebase configuration here
+const firebaseConfig = {
+  apiKey: "AIzaSyCDLZBgltvio0vF_nSnVDX03Z9IDtkYQMU",
+  authDomain: "outofcook.firebaseapp.com",
+  projectId: "outofcook",
+  storageBucket: "outofcook.appspot.com",
+  messagingSenderId: "755923868479",
+  appId: "1:755923868479:web:b52ba752211030994a918a",
+};
 
-const data = [
-  { id: 1, title: "الحيوانات", image:"https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80"},
-  { id: 2, title: "Photo 2", image: "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80" },
-  { id: 3, title: "Photo 3", image: "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80" },
-  { id: 4, title: "Photo 4", image: "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80" },
-  { id: 5, title: "Photo 5", image: "https://images.unsplash.com/photo-1683143726325-ee14e56ab69c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80" },
-];
-
-const Item = ({ title, image, onPress }) => (
-  <TouchableOpacity onPress={onPress} style={styles.item}>
-    <Image style={styles.image} source={{ uri: image }} />
-    <Text style={styles.title}>{title}</Text>
-  </TouchableOpacity>
-);
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use the existing app
+}
 
 const SelectPage = () => {
   const navigation = useNavigation();
+  const [fetchedData, setFetchedData] = useState([]);
+  useEffect(() => {
+    const fetchFirestoreData = async () => {
+      try {
+        const firestore = firebase.firestore();
+        const collectionRef = firestore.collection("dataform");
+
+        const snapshot = await collectionRef.get();
+        const data = snapshot.docs.map((doc) => doc.data());
+
+        setFetchedData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchFirestoreData();
+  }, []);
 
   const goToTheNextPage = (title) => {
-    navigation.navigate("SelectPage",  { title: title });
+    navigation.navigate("SelectPage", { title: title });
   };
 
   const renderItem = ({ item }) => (
@@ -44,13 +65,20 @@ const SelectPage = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={data}
+        data={fetchedData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );
 };
+
+const Item = ({ title, image, onPress }) => (
+  <TouchableOpacity onPress={onPress} style={styles.item}>
+    <Image style={styles.image} source={{ uri: image }} />
+    <Text style={styles.title}>{title}</Text>
+  </TouchableOpacity>
+);
 
 const windowWidth = Dimensions.get("window").width;
 

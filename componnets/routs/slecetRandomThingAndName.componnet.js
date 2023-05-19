@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Countdown from "./countdown.componnet";
 
-const SelectRandomThings = ({ Names }) => {
+const SelectRandomThings = ({ Names, data }) => {
   const [randomIndex, setRandomIndex] = useState(null);
   const [listDone, setListDone] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,55 +24,9 @@ const SelectRandomThings = ({ Names }) => {
   const [voteData, setVoteData] = useState([]);
   const randomAnimals = [];
   const randomIndices = [];
-
   const navigation = useNavigation();
 
-  const animals = [
-    "أسد",
-    "نمر",
-    "فيل",
-    "زرافة",
-    "قرد",
-    "كنغر",
-    "دب",
-    "ثعلب",
-    "ذئب",
-    "ثعبان",
-    "تمساح",
-    "سلحفاة",
-    "حصان",
-    "حمار",
-    "جمل",
-    "غزال",
-    "فرس النهر",
-    "بقرة",
-    "أرنب",
-    "خفاش",
-    "حوت",
-    "دولفين",
-    "سمك القرش",
-    "بطريق",
-    "نسر",
-    "صقر",
-    "بومة",
-    "غراب",
-    "حمامة",
-    "دجاج",
-    "ديك",
-    "نملة",
-    "عنكبوت",
-    "الكوالا",
-    "الغوريلا",
-    "الحمام الزاجل",
-    "الببغاء",
-    "السنجاب",
-    "القنفذ",
-    "كوبرا",
-    "خروف",
-    "فهد",
-    "تنين",
-    "لامى",
-  ];
+  const animals = data;
 
   const getRandomAnimals = () => {
     let lastRandomAnimalIndex;
@@ -215,6 +169,7 @@ const SelectRandomThings = ({ Names }) => {
                             array={randomAnimalList}
                             item={randomAnimal}
                             voteData={voteData}
+                            data={data}
                           />
                         </>
                       ) : (

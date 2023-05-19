@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Result from "./results.componnet";
 
-const SelectItem = ({ Names, array, imposter, item, voteData }) => {
+const SelectItem = ({ Names, array, imposter, item, voteData, data }) => {
 
   const [selectedButton, setSelectedButton] = useState(null);
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
@@ -56,7 +56,7 @@ const SelectItem = ({ Names, array, imposter, item, voteData }) => {
           ))}
         </>
       )}
-      {renderOtherComponent && <Result Names={Names} voteData={voteData} imposter={imposter} gotTheThing={gotTheThing} />}
+      {renderOtherComponent && <Result Names={Names} voteData={voteData} imposter={imposter} gotTheThing={gotTheThing} data={data}/>}
     </View>
   );
 };

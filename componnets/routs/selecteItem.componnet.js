@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Result from "./results.componnet";
 
 const SelectItem = ({ Names, array, imposter, item, voteData, data }) => {
-
   const [selectedButton, setSelectedButton] = useState(null);
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
   const [renderOtherComponent, setRenderOtherComponent] = useState(false);
@@ -24,39 +29,53 @@ const SelectItem = ({ Names, array, imposter, item, voteData, data }) => {
 
   return (
     <View style={styles.container}>
-      {!renderOtherComponent && (
-        <>
-          <Text style={styles.name}>
-            اخي الدخيل: {imposter} اختر الطبخة الصحيحة
-          </Text>
-          {array.map((oneArray) => (
-            <TouchableOpacity
-              key={oneArray}
-              onPress={() => {
-                handleButtonPress(oneArray);
-                setButtonIsClicked(true);
-              }}
-            >
-              <Text
-                style={[
-                  styles.button,
-                  buttonIsClicked && {
-                    backgroundColor:
-                      oneArray === item
-                        ? "green"
-                        : selectedButton === oneArray
-                        ? "red"
-                        : "#ADD8E6",
-                  },
-                ]}
+      <ScrollView
+        style={styles.containerScroll}
+        contentContainerStyle={{ justifyContent: "center" , alignItems: 'center'}}
+      >
+        {!renderOtherComponent && (
+          <>
+            <Text style={styles.name}>
+              اخي الدخيل: {imposter} اختر الطبخة الصحيحة
+            </Text>
+            {array.map((oneArray) => (
+              <TouchableOpacity
+                key={oneArray}
+                onPress={() => {
+                  handleButtonPress(oneArray);
+                  setButtonIsClicked(true);
+                }}
               >
-                {oneArray}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </>
-      )}
-      {renderOtherComponent && <Result Names={Names} voteData={voteData} imposter={imposter} gotTheThing={gotTheThing} data={data}/>}
+                <Text
+                  style={[
+                    styles.button,
+                    buttonIsClicked && {
+                      backgroundColor:
+                        oneArray === item
+                          ? "green"
+                          : selectedButton === oneArray
+                          ? "red"
+                          : "#ADD8E6",
+                    },
+                  ]}
+                >
+                  {oneArray}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </>
+        )}
+
+        {renderOtherComponent && (
+          <Result
+            Names={Names}
+            voteData={voteData}
+            imposter={imposter}
+            gotTheThing={gotTheThing}
+            data={data}
+          />
+        )}
+      </ScrollView>
     </View>
   );
 };
@@ -67,6 +86,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFF0F5",
+  },
+  containerScroll: {
+    flex: 1,
+    alignContent: "center",
   },
   button: {
     borderRadius: 15,

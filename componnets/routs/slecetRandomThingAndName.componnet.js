@@ -31,7 +31,7 @@ const SelectRandomThings = ({ Names, data }) => {
   const getRandomAnimals = () => {
     let lastRandomAnimalIndex;
 
-    while (randomAnimals.length < 6) {
+    while (randomAnimals.length < 10) {
       const randomIndex = Math.floor(Math.random() * animals.length);
       if (!randomIndices.includes(randomIndex)) {
         randomIndices.push(randomIndex);

@@ -126,8 +126,8 @@ const Result = ({ Names, voteData, imposter, gotTheThing, data }) => {
           <Text style={styles.title}>النتائج</Text>
           <ScrollView
             style={styles.containerScroll}
-            contentContainerStyle={styles.contentContainer}
-          >
+            contentContainerStyle={{ justifyContent: "center" , alignItems: 'center'}}
+            >
             {Names.map((name, index) => (
               <View key={index} style={styles.playerContainer}>
                 <Text style={styles.score}>{totalScores[name]}</Text>
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
   },
   containerScroll: {
     flex: 1,
-    width: "100%",
-    paddingHorizontal: 20,
+    alignContent: "center",
+    width: '80%'
   },
   contentContainer: {
     alignItems: "center",
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
 
     alignItems: "center",
-    width: "76%",
+    width: "70%",
   },
   score: {
     fontSize: 30,

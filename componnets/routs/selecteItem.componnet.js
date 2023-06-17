@@ -29,12 +29,15 @@ const SelectItem = ({ Names, array, imposter, item, voteData, data }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.containerScroll}
-        contentContainerStyle={{ justifyContent: "center" , alignItems: 'center'}}
-      >
-        {!renderOtherComponent && (
-          <>
+      {!renderOtherComponent && (
+        <>
+          <ScrollView
+            style={styles.containerScroll}
+            contentContainerStyle={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Text style={styles.name}>
               اخي الدخيل: {imposter} اختر الطبخة الصحيحة
             </Text>
@@ -63,19 +66,18 @@ const SelectItem = ({ Names, array, imposter, item, voteData, data }) => {
                 </Text>
               </TouchableOpacity>
             ))}
-          </>
-        )}
-
-        {renderOtherComponent && (
-          <Result
-            Names={Names}
-            voteData={voteData}
-            imposter={imposter}
-            gotTheThing={gotTheThing}
-            data={data}
-          />
-        )}
-      </ScrollView>
+          </ScrollView>
+        </>
+      )}
+      {renderOtherComponent && (
+        <Result
+          Names={Names}
+          voteData={voteData}
+          imposter={imposter}
+          gotTheThing={gotTheThing}
+          data={data}
+        />
+      )}
     </View>
   );
 };
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   },
   containerScroll: {
     flex: 1,
-    alignContent: "center",
+    width: "100%",
   },
   button: {
     borderRadius: 15,

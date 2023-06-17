@@ -15,7 +15,7 @@ const SelectRandomThings = ({ Names, data }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
   const [randomAnimal, setRandomAnimal] = useState("");
-  const [randomNameForQ, setRandomNameForQ] = useState(1);
+  const [randomNameForQ, setRandomNameForQ] = useState(Math.floor(Math.random() * Names.length));
   const [getQPage, setGetQPage] = useState(false);
   const [getVote, setGetVote] = useState(false);
   const [showTheImposterPage, setShowTheImposterPage] = useState(false);

@@ -16,7 +16,7 @@ import {
   setDoc,
   collection,
   deleteDoc,
-  getDocs
+  getDocs,
 } from "firebase/firestore";
 
 // Add your Firebase configuration here
@@ -35,6 +35,7 @@ const db = getFirestore(app);
 
 const Result = ({ Names, voteData, imposter, gotTheThing, data }) => {
   const [totalScores, setTotalScores] = useState({});
+  const [sortedNames, setSortedNames] = useState([]); // Add this line
   const [showSelectRandomThings, setShowSelectRandomThings] = useState(false);
   const [showFinshButton, setShowFinshButton] = useState(true);
 
@@ -60,7 +61,12 @@ const Result = ({ Names, voteData, imposter, gotTheThing, data }) => {
       updatedScores[name] = score;
     }
 
+    const sortedNames = Object.keys(updatedScores).sort(
+      (a, b) => updatedScores[b] - updatedScores[a]
+    );
+
     setTotalScores(updatedScores);
+    setSortedNames(sortedNames);
   };
 
   const fetchPlayerScore = async (name) => {
@@ -126,26 +132,47 @@ const Result = ({ Names, voteData, imposter, gotTheThing, data }) => {
           <Text style={styles.title}>النتائج</Text>
           <ScrollView
             style={styles.containerScroll}
-            contentContainerStyle={{ justifyContent: "center" , alignItems: 'center'}}
-            >
-            {Names.map((name, index) => (
-              <View key={index} style={styles.playerContainer}>
-                <Text style={styles.score}>{totalScores[name]}</Text>
-                <Text style={styles.playerName}>{name}</Text>
+            contentContainerStyle={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {sortedNames.map((name, index) => (
+              <View key={index} style={[styles.playerContainer]}>
+                <Text
+                  style={[
+                    styles.score,
+                    totalScores[name] === totalScores[sortedNames[0]] && {
+                      color: "#90EE90",
+                    }, // Change text color for highest score
+                  ]}
+                >
+                  {totalScores[name]}
+                </Text>
+                <Text
+                  style={[
+                    styles.playerName,
+                    totalScores[name] === totalScores[sortedNames[0]] && {
+                      color: "#90EE90",
+                    },
+                  ]}
+                >
+                  {name}
+                </Text>
               </View>
             ))}
           </ScrollView>
           <TouchableOpacity onPress={handleNextButtonPress}>
             <Text style={styles.button}>التالي</Text>
           </TouchableOpacity>
-          {showFinshButton ?  (
+          {showFinshButton ? (
             <TouchableOpacity onPress={handelFinshButtonPress}>
               <Text style={styles.button}>انهاء اللعبة</Text>
             </TouchableOpacity>
-          ): null}
+          ) : null}
         </View>
       ) : (
-        <SelectRandomThings Names={Names} data={data}/>
+        <SelectRandomThings Names={Names} data={data} />
       )}
     </>
   );
@@ -161,7 +188,7 @@ const styles = StyleSheet.create({
   containerScroll: {
     flex: 1,
     alignContent: "center",
-    width: '80%'
+    width: "95%",
   },
   contentContainer: {
     alignItems: "center",

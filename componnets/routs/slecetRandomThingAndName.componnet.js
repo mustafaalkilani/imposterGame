@@ -13,9 +13,14 @@ const SelectRandomThings = ({ Names, data }) => {
   const [randomIndex, setRandomIndex] = useState(null);
   const [listDone, setListDone] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const filteredNames = Names.filter((_, index) => index !== currentIndex);
+
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
   const [randomAnimal, setRandomAnimal] = useState("");
-  const [randomNameForQ, setRandomNameForQ] = useState(Math.floor(Math.random() * Names.length));
+  const [randomNameForQ, setRandomNameForQ] = useState(
+    Math.floor(Math.random() * Names.length)
+  );
   const [getQPage, setGetQPage] = useState(false);
   const [getVote, setGetVote] = useState(false);
   const [showTheImposterPage, setShowTheImposterPage] = useState(false);
@@ -27,6 +32,8 @@ const SelectRandomThings = ({ Names, data }) => {
   const navigation = useNavigation();
 
   const animals = data;
+
+
 
   const getRandomAnimals = () => {
     let lastRandomAnimalIndex;
@@ -69,6 +76,15 @@ const SelectRandomThings = ({ Names, data }) => {
 
     getRandomIndex();
   }, [Names]);
+
+  useEffect(() => {
+    let newRandomNameForQ;
+    do {
+        newRandomNameForQ = Math.floor(Math.random() * Names.length);
+    } while (newRandomNameForQ === currentIndex);
+    
+    setRandomNameForQ(newRandomNameForQ);
+}, [randomNameForQ]);
 
   const handleNextPress = () => {
     const nextIndex = currentIndex + 1;
@@ -222,9 +238,7 @@ const SelectRandomThings = ({ Names, data }) => {
                           <Text style={styles.name}>
                             المّكون {Names[currentIndex]} اسأل
                           </Text>
-                          {Names.filter(
-                            (name, index) => index !== currentIndex
-                          ).map((name, index) => (
+                          {filteredNames.map((name, index) => (
                             <TouchableOpacity
                               key={index}
                               onPress={() => {

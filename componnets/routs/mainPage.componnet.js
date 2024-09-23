@@ -38,9 +38,11 @@ const MainPage = ({ route }) => {
   const [textInputValue, setTextInputValue] = useState("");
   const [textList, setTextList] = useState([]);
   const [renderSelectRandomThing, setRenderSelectRandomThing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const catgroiesSelctor = route.params.title;
   const navigation = useNavigation();
   const [fetchedData, setFetchedData] = useState('');
+  const [isNameListEmptyAfterPressing, setIsNameListEmptyAfterPressing] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,18 +64,31 @@ const MainPage = ({ route }) => {
     fetchData();
   }, []);
   const goToTheNextPage = () => {
-    setRenderSelectRandomThing(true);
+    if (textList.length <= 2) {
+      setIsNameListEmptyAfterPressing(false);
+      console.log('empty')
+    } else {
+      setIsNameListEmptyAfterPressing(true);
+      setRenderSelectRandomThing(true);
+      
+    }
   };
 
   const handleAddText = () => {
-    setModalVisible(false);
-    setTextList([...textList, textInputValue]);
-    setTextInputValue("");
+    if(textInputValue.trim() === '') {
+      setErrorMessage('الرجاء اضافة اسم')
+    } else {
+      setModalVisible(false);
+      setTextList([...textList, textInputValue]);
+      setTextInputValue("");
+      setErrorMessage('');
+    }
   };
 
   const handleCancel = () => {
     setModalVisible(false);
     setTextInputValue("");
+    setErrorMessage('');
   };
 
   const handleRemoveText = (index) => {
@@ -110,6 +125,7 @@ const MainPage = ({ route }) => {
           >
             <MaterialIcons name="person" size={30} color="#fff" />
           </TouchableOpacity>
+          {isNameListEmptyAfterPressing === true ? <Text style={styles.error}>الرجاء اضافة اسماء</Text>: null}
           <TouchableOpacity
             style={styles.confiremButton}
             onPress={goToTheNextPage}
@@ -124,6 +140,7 @@ const MainPage = ({ route }) => {
             <View style={styles.modalContainer}>
               <View style={styles.modalView}>
                 <Text style={styles.modalTitle}>أضف اسماً جديداً</Text>
+                {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
                 <TextInput
                   style={styles.modalInput}
                   onChangeText={(text) => setTextInputValue(text)}
@@ -219,7 +236,12 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  error: {
+    fontSize: 16,
+    color: 'red',
+    marginBottom: 10
   },
   modalInput: {
     width: "100%",
